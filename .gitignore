@@ -1,8 +1,8 @@
-# composer specific #
-composer.*
-
 # virtualbox specific #
 .vagrant/*
 
 # Slim Framework specific #
 vendor/*
+
+# composer specific #
+composer.*
