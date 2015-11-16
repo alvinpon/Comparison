@@ -1,4 +1,5 @@
 <?php
+namespace src;
 
 class ComparingURLs {
 	private $index;
@@ -6,20 +7,32 @@ class ComparingURLs {
 	private $arrayOfSecondURL;
 	private $arrayOfConclusion;
 
-	function __construct() {
+	/**
+	 * [Initialize all the properties]
+	 */
+	public function __construct() {
 		$this->index				= 0;
 		$this->arrayOfFirstURL		= array();
 		$this->arrayOfSecondURL		= array();
 		$this->arrayOfConclusion	= array();
 	}
 
-	function __destruct() {
+	/**
+	 * [Uninitialize all the properties]
+	 */
+	public function __destruct() {
 		unset($this->index);
-		unset($arrayOfFirstURL);
-		unset($arrayOfSecondURL);
-		unset($arrayOfConclusion);
+		unset($this->arrayOfFirstURL);
+		unset($this->arrayOfSecondURL);
+		unset($this->arrayOfConclusion);
 	}
 
+	/**
+	 * [Get contents of two URLs and compare the contents whether are same or different]
+	 * @param  [string]  $URL1 [first URL]
+	 * @param  [string]  $URL2 [second URL]
+	 * @return [boolean]       [return true or false if two URLs are the same or different]
+	 */
 	private function compareURLs($URL1, $URL2) {
 		$contentOfURL1 = "";
 		$contentOfURL2 = "";
@@ -34,6 +47,11 @@ class ComparingURLs {
 		}
 	}
 	
+	/**
+	 * [Get content of URL and assign into contentOfURL]
+	 * @param [string]   $URL           [a URL of webpage]
+	 * @param [string &] &$contentOfURL [a content of URL]
+	 */
 	private function getContentOfURL($URL, &$contentOfURL) {
 		$curl = curl_init($URL);
 		curl_setopt($curl, CURLOPT_FAILONERROR,		true);
@@ -45,6 +63,10 @@ class ComparingURLs {
 		curl_close($curl);
 	}
 
+	/**
+	 * [Retrieve a path of file which user just uploaded ]
+	 * @return [string] $uploadedFilePath [retrieve a file path or null if a file uploads successfully or unsuccessfully]
+	 */
 	private function getFilePath() {
 		$uploadedFilePath = "../uploads/" . basename($_FILES["fileInput"]["name"]);
 
@@ -55,6 +77,9 @@ class ComparingURLs {
 		}
 	}
 
+	/**
+	 * [Assign "same" or "different" into property $arrayOfConclusion if contents of two URLs are same or different]
+	 */
 	private function getConclusions() {
 		for ($i = 0; $i < $this->index; $i++) {
 			if ($this->compareURLs($this->arrayOfFirstURL[$i], $this->arrayOfSecondURL[$i])) {
@@ -65,6 +90,11 @@ class ComparingURLs {
 		}
 	}
 
+	/**
+	 * [Move file which user just uploaded to a specific path]
+	 * @param  [string]  $uploadedFilePath [the specific file path which you assigned]
+	 * @return [boolean]                   [return true or false if file moves to specific path successfully or unsuccessfully]
+	 */
 	private function uploadFile($uploadedFilePath) {
 		if (move_uploaded_file($_FILES["fileInput"]["tmp_name"], $uploadedFilePath) === true) {
 			return true;
@@ -74,13 +104,21 @@ class ComparingURLs {
 		}
 	}
 
-	public function compareTwoURLs() {
+	public function setTwoURLs($firstURL, $secondURL) {
 		$this->index 				= 1;
-		$this->arrayOfFirstURL[0]	= $_POST["URL1"];
-		$this->arrayOfSecondURL[0]	= $_POST["URL2"];
+		$this->arrayOfFirstURL[0]	= $firstURL;
+		$this->arrayOfSecondURL[0]	= $secondURL;
+	}
+	/**
+	 * [Compare only two URLs]
+	 */
+	public function compareTwoURLs() {
 		$this->getConclusions();
 	}
 
+	/**
+	 * [Compare a list of URLs from HTML file]
+	 */
 	public function compareListOfURLsFromHTML() {
 		$flag			= true;
 		$filePathOfHTML	= $this->getFilePath();
@@ -96,13 +134,10 @@ class ComparingURLs {
 						$this->arrayOfSecondURL[$this->index] = $line;
 						$this->index++;
 					}
-
 					$flag = !$flag;
 				}
 			}
-
 			$this->getConclusions();
-
 			fclose($fileHandle);
 			unlink($filePathOfHTML);
 		} else {
@@ -110,6 +145,9 @@ class ComparingURLs {
 		}
 	}
 
+	/**
+	 * [Compare a list of URLs from CSV file]
+	 */
 	public function compareListOfURLsFromCSV() {
 		$filePathOfCSV	= $this->getFilePath();
 		$contentOfCVS	= file_get_contents($filePathOfCSV);
@@ -123,12 +161,15 @@ class ComparingURLs {
 				$this->index++;
 			}
 		}
-
 		$this->getConclusions();
 		unset($arrayOfURLs);
 		unlink($filePathOfCSV);
 	}
 
+	/**
+	 * [Return the results after comparing contents]
+	 * @return [array] [combine three arrays into one array]
+	 */
 	public function getResults() {
 		return array('firstURL' => $this->arrayOfFirstURL, 'secondURL' => $this->arrayOfSecondURL, 'conclusion' => $this->arrayOfConclusion);
 	}
