@@ -37,9 +37,11 @@
 
 			<div class="form_group">
 				<div class="radio">
-					<label><input id="optionsRadios2" name="optionsRadios" type="radio" value="option2">
+					<label>
+						<input id="optionsRadios2" name="optionsRadios" type="radio" value="option2">
 						<strong>Upload File (csv or html file.)</strong>
-					</label><input accept=".csv, .html" id="fileInput" name="fileInput" type="file">
+					</label>
+					<input accept=".csv, .html" id="fileInput" name="fileInput" type="file">
 				</div>
 			</div>
 
