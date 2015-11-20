@@ -1,6 +1,5 @@
 <?php
 require '../vendor/autoload.php';
-require 'ComparingURLs.php';
 
 $app = new \Slim\Slim();
 
@@ -9,7 +8,7 @@ $app->get('/', function () use ($app) {
 });
 
 $app->post('/compare', function () use ($app) {
-	$comparingURLs = new src\ComparingURLs();
+	$comparingURLs = new \src\ComparingURLs();
 
 	if ($app->request->post("optionsRadios") == "option1") {
 		if (strlen($app->request->post("URL1")) !== 0 && strlen($app->request->post("URL1")) !== 0) {
@@ -26,6 +25,7 @@ $app->post('/compare', function () use ($app) {
 		}
 	}
 	$app->render('result.php', $comparingURLs->getResults());
+
 	unset($comparingURLs);
 });
 

@@ -1,0 +1,17 @@
+{
+    "name": "alvinpon/comparingdifferenturls",
+    "require": {
+        "slim/slim": "^2.6"
+    },
+    "authors": [
+        {
+            "name": "Alvin Pon",
+            "email": "alvinpon@icloud.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "src\\": "src/"
+        }
+    }
+}
