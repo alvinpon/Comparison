@@ -5,14 +5,6 @@
 		<li>Download Composer-Setup.exe</li>
 		<li>Execute Composer-Setup.exe</li>
 	</ol>
-	<li>Initialize Composer</li>
-	<ol>
-		<li>Use cmd.exe</li>
-		<li>Move into your project directory</li>
-		<li>Execute command, composer init and enter information you want</li>
-		<li>When the phrase which is "Search for a package:" shows up, please type slim</li>
-		<li>Choose number 0</li>
-	</ol>
 	<li>Download Slim Framework</li>
 	<ol>
 		<li>Execute command, composer install</li>
