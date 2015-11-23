@@ -82,10 +82,14 @@ class ComparingURLs {
 	 */
 	private function getConclusions() {
 		for ($i = 0; $i < $this->index; $i++) {
-			if ($this->compareURLs($this->arrayOfFirstURL[$i], $this->arrayOfSecondURL[$i])) {
-				$this->arrayOfConclusion[$i] = "same";
+			if (!filter_var($this->arrayOfFirstURL[$i], FILTER_VALIDATE_URL) === false && !filter_var($this->arrayOfSecondURL[$i], FILTER_VALIDATE_URL) === false) {
+				if ($this->compareURLs($this->arrayOfFirstURL[$i], $this->arrayOfSecondURL[$i])) {
+					$this->arrayOfConclusion[$i] = "same";
+				} else {
+					$this->arrayOfConclusion[$i] = "different";
+				}
 			} else {
-				$this->arrayOfConclusion[$i] = "different";
+				$this->arrayOfConclusion[$i] = "Not validated URL";
 			}
 		}
 	}
@@ -104,15 +108,15 @@ class ComparingURLs {
 		}
 	}
 
-	public function setTwoURLs($firstURL, $secondURL) {
+	/**
+	 * [Only compare two URLs]
+	 * @param  [string] $firstURL  [first URL]
+	 * @param  [string] $secondURL [second URL]
+	 */
+	public function compareTwoURLs($firstURL, $secondURL) {
 		$this->index 				= 1;
 		$this->arrayOfFirstURL[0]	= $firstURL;
 		$this->arrayOfSecondURL[0]	= $secondURL;
-	}
-	/**
-	 * [Compare only two URLs]
-	 */
-	public function compareTwoURLs() {
 		$this->getConclusions();
 	}
 
