@@ -17,10 +17,13 @@ $app->post('/compare', function () use ($app) {
 		}
 	} else {
 		if (strlen(basename($_FILES["fileInput"]["name"])) !== 0) {
-			if (basename($_FILES["fileInput"]["type"]) === "html") {
-				$comparingURLs->compareListOfURLsFromHTML();
-			} else {
-				$comparingURLs->compareListOfURLsFromCSV();
+			$filePath = "../uploads/" . basename($_FILES["fileInput"]["name"]);
+			if (move_uploaded_file($_FILES["fileInput"]["tmp_name"], $filePath)) {
+				if (strcmp(basename($_FILES["fileInput"]["type"]), "vnd.ms-excel") === 0) {
+					$comparingURLs->compareListOfURLsFromCSV($filePath);
+				} else {
+					$comparingURLs->compareListOfURLsFromHTML($filePath);
+				}
 			}
 		}
 	}
