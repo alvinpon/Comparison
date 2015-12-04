@@ -5,6 +5,8 @@
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -20,7 +22,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php for ($i = 0; $i < count($firstURL); $i++) : ?>
+					<?php for ($i = 0; $i < count($conclusion); $i++) : ?>
 						<tr>
 							<td><?php echo $i + 1;			?></td>
 							<td><?php echo $firstURL[$i];	?></td>

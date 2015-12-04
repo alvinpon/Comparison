@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Comparing Source Code Of Different Two Pages</title>
+	<title>Comparing Content Of Different Two Pages</title>
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="js/default.js"></script>
 </head>
 <body onload="loadPage()">
 	<div class="container">
@@ -40,7 +41,7 @@
 				<div class="radio">
 					<label>
 						<input id="optionsRadios2" name="optionsRadios" onclick="clickFile()" type="radio" value="option2">
-						<strong>Upload File (csv or html file.)</strong>
+						<strong>Upload File (.csv or .html file.)</strong>
 					</label>
 				</div>
 				<input accept=".csv, .html" id="fileInput" name="fileInput" type="file">
@@ -50,7 +51,5 @@
 
 		</form>
 	</div>
-	
-	<script src="js/default.js"></script>
 </body>
 </html>
