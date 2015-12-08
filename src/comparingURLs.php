@@ -28,7 +28,7 @@ class ComparingURLs {
 	}
 
 	/**
-	 * [Get contents of two URLs and compare the contents whether they are same or different]
+	 * [Get contents of two URLs and compare the contents whether they sare same or different]
 	 * @param  [string]  			$firstURL  [first URL]
 	 * @param  [string]  			$secondURL [second URL]
 	 * @return [boolean or string]             [return true or false if two URLs are the same or different or return "Invalid URL" if one of each URL is invalid URL]
@@ -155,7 +155,7 @@ class ComparingURLs {
 	 */
 	public function setTwoURLs($firstURL, $secondURL) {
 		if (!filter_var($firstURL, FILTER_VALIDATE_URL) === false && !filter_var($secondURL, FILTER_VALIDATE_URL) === false) {
-			$this->index 				= 1;
+			$this->index				= 1;
 			$this->arrayOfFirstURL[0]	= $firstURL;
 			$this->arrayOfSecondURL[0]	= $secondURL;
 			return true;
