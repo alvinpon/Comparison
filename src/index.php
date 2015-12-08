@@ -13,21 +13,21 @@ $app->post('/compare', function () use ($app) {
 
 	if ($app->request->post("optionsRadios") == "option1") {
 		if (strlen($app->request->post("URL1")) !== 0 && strlen($app->request->post("URL2")) !== 0) {
-			$comparingURLs->compareTwoURLs($app->request->post("URL1"), $app->request->post("URL2"));
+			$comparingURLs->setTwoURLs($app->request->post("URL1"), $app->request->post("URL2"));
 		}
 	} else {
 		if (strlen(basename($_FILES["fileInput"]["name"])) !== 0) {
 			$filePath = "../uploads/" . basename($_FILES["fileInput"]["name"]);
 			if (move_uploaded_file($_FILES["fileInput"]["tmp_name"], $filePath)) {
 				if (strcmp(basename($_FILES["fileInput"]["type"]), "vnd.ms-excel") === 0) {
-					$comparingURLs->compareListOfURLsFromCSV($filePath);
+					$comparingURLs->setListOfURLsFromCSV($filePath);
 				} else {
-					$comparingURLs->compareListOfURLsFromHTML($filePath);
+					$comparingURLs->setListOfURLsFromHTML($filePath);
 				}
 			}
 		}
 	}
-	$app->render('result.php', $comparingURLs->getResults());
+	$app->render('conclusions.php', $comparingURLs->getConclusions());
 
 	unset($comparingURLs);
 });
