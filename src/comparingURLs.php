@@ -8,7 +8,7 @@ class ComparingURLs {
 	private $arrayOfConclusion;
 
 	/**
-	 * [Initialize all the properties]
+	 * [Initialize all properties]
 	 */
 	public function __construct() {
 		$this->index				= 0;
@@ -18,7 +18,7 @@ class ComparingURLs {
 	}
 
 	/**
-	 * [Uninitialize all the properties]
+	 * [Uninitialize all properties]
 	 */
 	public function __destruct() {
 		unset($this->index);
@@ -28,27 +28,10 @@ class ComparingURLs {
 	}
 
 	/**
-	 * [Assign "Same", "Different" or "Invalid URL" into $arrayOfConclusion if contents of two URLs are same or different or one of each URL is invalid URL]
-	 */
-	private function getConclusions() {
-		for ($i = 0; $i < $this->index; $i++) {
-			if (!filter_var($this->arrayOfFirstURL[$i], FILTER_VALIDATE_URL) === false && !filter_var($this->arrayOfSecondURL[$i], FILTER_VALIDATE_URL) === false) {
-				if ($this->compareURLs($this->arrayOfFirstURL[$i], $this->arrayOfSecondURL[$i])) {
-					$this->arrayOfConclusion[$i] 	= "Same";
-				} else {
-					$this->arrayOfConclusion[$i] 	= "Different";
-				}
-			} else {
-				$this->arrayOfConclusion[$i]		= "Invalid URL";
-			}
-		}
-	}
-
-	/**
-	 * [Get contents of two URLs and compare the contents whether are same or different]
+	 * [Get contents of two URLs and compare the contents whether they are same or different]
 	 * @param  [string]  			$firstURL  [first URL]
 	 * @param  [string]  			$secondURL [second URL]
-	 * @return [boolean or string]             [return true or false if two URLs are the same, different or "Invalid URL" if one of each URL is invalid URL]
+	 * @return [boolean or string]             [return true or false if two URLs are the same or different or return "Invalid URL" if one of each URL is invalid URL]
 	 */
 	public function compareURLs($firstURL, $secondURL) {
 		if (!filter_var($firstURL, FILTER_VALIDATE_URL) === false && !filter_var($secondURL, FILTER_VALIDATE_URL) === false) {
@@ -67,12 +50,32 @@ class ComparingURLs {
 			return "Invalid URL";
 		}
 	}
-	
+
+	/**
+	 * [Assign "Same", "Different" or "Invalid URL" into $arrayOfConclusion if contents of two URLs are same or different or one of each URL is invalid URL
+	 *  return the conclusions after comparing contents]
+	 * @return [array] [combine three arrays into one array]
+	 */
+	public function getConclusions() {
+		for ($i = 0; $i < $this->index; $i++) {
+			if (!filter_var($this->arrayOfFirstURL[$i], FILTER_VALIDATE_URL) === false && !filter_var($this->arrayOfSecondURL[$i], FILTER_VALIDATE_URL) === false) {
+				if ($this->compareURLs($this->arrayOfFirstURL[$i], $this->arrayOfSecondURL[$i])) {
+					$this->arrayOfConclusion[$i] = "Same";
+				} else {
+					$this->arrayOfConclusion[$i] = "Different";
+				}
+			} else {
+				$this->arrayOfConclusion[$i] = "Invalid URL";
+			}
+		}
+		return array("arrayOfFirstURL" => $this->arrayOfFirstURL, "arrayOfSecondURL" => $this->arrayOfSecondURL, "arrayOfConclusion" => $this->arrayOfConclusion);
+	}
+
 	/**
 	 * [Get content of URL and assign into $contentOfURL]
 	 * @param   [string]   $URL           [a URL of webpage]
 	 * @param 	[string &] $contentOfURL  [a content of URL]
-	 * @return  [boolean]                 [return true or false if $firstURL and $secondURL are valid URL or not]
+	 * @return  [boolean]                 [return true or false if $URL is valid URL and $contentOfURL is string type or not]
 	 */
 	public function getContentOfURL($URL, &$contentOfURL) {
 		if (!filter_var($URL, FILTER_VALIDATE_URL) === false && is_string($contentOfURL) === true) {
@@ -91,29 +94,11 @@ class ComparingURLs {
 	}
 
 	/**
-	 * [Compare two URLs]
-	 * @param  [string] $firstURL  [first URL]
-	 * @param  [string] $secondURL [second URL]
-	 * @return [boolean]           [return true or false if $firstURL and $secondURL are valid URL or not]
-	 */
-	public function compareTwoURLs($firstURL, $secondURL) {
-		if (!filter_var($firstURL, FILTER_VALIDATE_URL) === false && !filter_var($secondURL, FILTER_VALIDATE_URL) === false) {
-			$this->index 				= 1;
-			$this->arrayOfFirstURL[0]	= $firstURL;
-			$this->arrayOfSecondURL[0]	= $secondURL;
-			$this->getConclusions();
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * [Compare a list of URLs from CSV file]
+	 * [Set a list of URLs from CSV file]
 	 * @param  [string]  $filePathOfCSV [a file path where you can find HTML file]
-	 * @return [boolean]                [return true or false if $filePathOfCSV is a string type and this file exists or not]
+	 * @return [boolean]                [return true or false if $filePathOfCSV is a string type, this file exists and file extension is csv or not]
 	 */
-	public function compareListOfURLsFromCSV($filePathOfCSV) {
+	public function setListOfURLsFromCSV($filePathOfCSV) {
 		if (is_string($filePathOfCSV) && file_exists($filePathOfCSV) && strcmp(pathinfo($filePathOfCSV, PATHINFO_EXTENSION), "csv") === 0) {
 			$arrayOfURL = str_getcsv(file_get_contents($filePathOfCSV), ",");
 			for ($i = 0; $i < count($arrayOfURL); $i++) {
@@ -124,7 +109,6 @@ class ComparingURLs {
 					$this->index++;
 				}
 			}
-			$this->getConclusions();
 			unset($arrayOfURL);
 			unlink($filePathOfCSV);
 			return true;
@@ -132,13 +116,13 @@ class ComparingURLs {
 			return false;
 		}
 	}
-	
+
 	/**
-	 * [Compare a list of URLs from HTML file]
+	 * [Set a list of URLs from HTML file]
 	 * @param  [string]  $filePathOfHTML [a file path where you can find HTML file]
-	 * @return [boolean]                 [return true of false if $filePathOfHTML is a string type and and this file exists or not]
+	 * @return [boolean]                 [return true or false if $filePathOfHTML is a string type, this file exists and file extension is html or not]
 	 */
-	public function compareListOfURLsFromHTML($filePathOfHTML) {
+	public function setListOfURLsFromHTML($filePathOfHTML) {
 		$flag = true;
 
 		if (is_string($filePathOfHTML) && file_exists($filePathOfHTML) && strcmp(pathinfo($filePathOfHTML, PATHINFO_EXTENSION), "html") === 0) {
@@ -155,7 +139,6 @@ class ComparingURLs {
 					$flag = !$flag;
 				}
 			}
-			$this->getConclusions();
 			fclose($fileHandle);
 			unlink($filePathOfHTML);
 			return true;
@@ -165,10 +148,19 @@ class ComparingURLs {
 	}
 
 	/**
-	 * [Return the results after comparing contents]
-	 * @return [array] [combine three arrays into one array]
+	 * [Set two URLs]
+	 * @param  [string] $firstURL  [first URL]
+	 * @param  [string] $secondURL [second URL]
+	 * @return [boolean]           [return true or false if $firstURL and $secondURL are valid URL or not]
 	 */
-	public function getResults() {
-		return array('firstURL' => $this->arrayOfFirstURL, 'secondURL' => $this->arrayOfSecondURL, 'conclusion' => $this->arrayOfConclusion);
+	public function setTwoURLs($firstURL, $secondURL) {
+		if (!filter_var($firstURL, FILTER_VALIDATE_URL) === false && !filter_var($secondURL, FILTER_VALIDATE_URL) === false) {
+			$this->index 				= 1;
+			$this->arrayOfFirstURL[0]	= $firstURL;
+			$this->arrayOfSecondURL[0]	= $secondURL;
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
