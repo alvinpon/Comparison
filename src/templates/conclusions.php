@@ -24,7 +24,7 @@
 					<tbody>
 						<?php for ($i = 0; $i < count($arrayOfConclusion); $i++) : ?>
 						<tr>
-							<td><?php echo $i + 1;			?></td>
+							<td><?php echo $i + 1;					?></td>
 							<td><?php echo $arrayOfFirstURL[$i];	?></td>
 							<td><?php echo $arrayOfSecondURL[$i];	?></td>
 							<td><?php echo $arrayOfConclusion[$i];	?></td>

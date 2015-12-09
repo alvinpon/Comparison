@@ -122,8 +122,7 @@ class DataTest extends PHPUnit_Framework_TestCase {
      */
     public function testSetTwoURLs($firstURL, $secondURL) {
         $objectOfComparingURLs = new \src\ComparingURLs();
-        $result = $objectOfComparingURLs->setTwoURLs($firstURL, $secondURL);
-        $this->assertTrue($result);
+        $this->assertTrue($objectOfComparingURLs->setTwoURLs($firstURL, $secondURL));
         unset($objectOfComparingURLs);
     }
 
