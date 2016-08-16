@@ -13,6 +13,6 @@ sudo sed -i 's/\/html//g' /etc/apache2/sites-enabled/000-default.conf
 sudo service apache2 restart
 
 if ! [ -L /var/www ]; then
-	rm -rf /var/www
-	ln -fs /vagrant/src /var/www
+    rm -rf /var/www
+    ln -fs /vagrant/src /var/www
 fi
