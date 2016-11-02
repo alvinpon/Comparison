@@ -5,10 +5,10 @@
 - Execute Composer-Setup.exe
 
 ## Download Slim Framework
-- Execute command, composer install
+- Execute command, `composer install`
 
 ## Run Vagrant
-- Execute command, vagrant up
+- Execute command, `vagrant up`
 
 ## Start using
 - Open your browser like Google Chrome and type localhost:4567
